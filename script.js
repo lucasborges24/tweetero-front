@@ -1,3 +1,19 @@
+window.onload = () => {
+  document
+    .querySelector(".btn-enviar")
+    .addEventListener("click", () =>
+      new SignUp().signup(
+        document.querySelector("#username").value,
+        document.querySelector("#username").value
+      )
+    );
+  document
+    .querySelector(".btn-enviar-tweet")
+    .addEventListener("click", () =>
+      new PostTweet().postTweet(document.querySelector("#tweet").value)
+    );
+};
+
 let _username = "";
 
 class SignUp {
@@ -88,20 +104,3 @@ class PostTweet {
     }
   }
 }
-
-const postTweet = new PostTweet();
-const signUp = new SignUp();
-
-document
-  .querySelector(".btn-enviar")
-  .addEventListener("click", () =>
-    signUp.signup(
-      document.querySelector("#username").value,
-      document.querySelector("#username").value
-    )
-  );
-document
-  .querySelector(".btn-enviar-tweet")
-  .addEventListener("click", () =>
-    postTweet.postTweet(document.querySelector("#tweet").value)
-  );
