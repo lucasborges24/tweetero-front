@@ -24,7 +24,7 @@ class SignUp {
   signup(username, avatar) {
     console.log(username);
     axios
-      .post("http://localhost:5001/sign-up", {
+      .post("https://tweetero-api-4a0l.onrender.com/sign-up", {
         username,
         avatar,
       })
@@ -44,9 +44,12 @@ class LoadTweets {
 
   async loadTweets() {
     try {
-      const { data } = await axios.get("http://localhost:5001/tweets");
+      const { data } = await axios.get(
+        "https://tweetero-api-4a0l.onrender.com/tweets"
+      );
       const tweets = data;
       let tweetsHtml = "";
+
       for (const tweet of tweets) {
         tweetsHtml += `
         <div class="tweet">
@@ -92,7 +95,7 @@ class PostTweet {
 
   async postTweet(tweet) {
     try {
-      await axios.post("http://localhost:5001/tweets", {
+      await axios.post("https://tweetero-api-4a0l.onrender.com/tweets", {
         username: _username,
         tweet,
       });
