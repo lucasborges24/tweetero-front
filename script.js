@@ -4,7 +4,7 @@ window.onload = () => {
     .addEventListener("click", () =>
       new SignUp().signup(
         document.querySelector("#username").value,
-        document.querySelector("#username").value
+        document.querySelector("#picture").value
       )
     );
   document
