@@ -20,9 +20,7 @@ class SignUp {
   constructor() {
     this.loadTweets = new LoadTweets();
   }
-
   signup(username, avatar) {
-    console.log(username);
     axios
       .post("https://tweetero-api-4a0l.onrender.com/sign-up", {
         username,
@@ -78,7 +76,6 @@ class LoadTweets {
   }
 
   escapeHtml(text) {
-    console.log(text);
     return text
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
