@@ -1,4 +1,4 @@
-let _username = '';
+let _username = "";
 
 class SignUp {
   constructor() {
@@ -7,29 +7,32 @@ class SignUp {
 
   signup(username, avatar) {
     console.log(username);
-  axios
+    axios
       .post("http://localhost:5001/sign-up", {
-      username,
+        username,
         avatar,
-    })
-    .then(() => {
-      _username = username;
+      })
+      .then(() => {
+        _username = username;
         this.loadTweets.loadTweets();
-    })
+      })
       .catch((err) => {
-      console.error(err);
+        console.error(err);
         alert("Erro ao fazer cadastro! Consulte os logs.");
-    });
-}
+      });
+  }
 }
 
-function loadTweets() {
-  axios.get('http://localhost:5001/tweets').then(res => {
-    const tweets = res.data;
-    let tweetsHtml = '';
+class LoadTweets {
+  constructor() {}
 
-    for (const tweet of tweets) {
-      tweetsHtml += `
+  async loadTweets() {
+    try {
+      const { data } = await axios.get("http://localhost:5001/tweets");
+      const tweets = data;
+      let tweetsHtml = "";
+      for (const tweet of tweets) {
+        tweetsHtml += `
         <div class="tweet">
           <div class="avatar">
             <img src="${tweet.avatar}" />
@@ -39,17 +42,31 @@ function loadTweets() {
               @${tweet.username}
             </div>
             <div class="body">
-              ${escapeHtml(tweet.tweet)}
+              ${this.escapeHtml(tweet.tweet)}
             </div>
           </div>
         </div>
       `;
-    }
+      }
 
-    document.querySelector('.tweets').innerHTML = tweetsHtml;
-    document.querySelector('.pagina-inicial').classList.add('hidden');
-    document.querySelector('.tweets-page').classList.remove('hidden');
-  });
+      document.querySelector(".tweets").innerHTML = tweetsHtml;
+      document.querySelector(".pagina-inicial").classList.add("hidden");
+      document.querySelector(".tweets-page").classList.remove("hidden");
+    } catch (error) {
+      console.log(error);
+      alert("Houve um erro ein!");
+    }
+  }
+
+  escapeHtml(text) {
+    console.log(text);
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 }
 
 class PostTweet {
@@ -60,7 +77,7 @@ class PostTweet {
   async postTweet(tweet) {
     try {
       await axios.post("http://localhost:5001/tweets", {
-      username: _username,
+        username: _username,
         tweet,
       });
       document.querySelector("#tweet").value = "";
@@ -71,6 +88,9 @@ class PostTweet {
     }
   }
 }
+
+const postTweet = new PostTweet();
+const signUp = new SignUp();
 
 document
   .querySelector(".btn-enviar")
