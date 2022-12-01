@@ -66,11 +66,16 @@ function postTweet() {
     });
 }
 
-function escapeHtml(unsafe) {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+document
+  .querySelector(".btn-enviar")
+  .addEventListener("click", () =>
+    signUp.signup(
+      document.querySelector("#username").value,
+      document.querySelector("#username").value
+    )
+  );
+document
+  .querySelector(".btn-enviar-tweet")
+  .addEventListener("click", () =>
+    postTweet.postTweet(document.querySelector("#tweet").value)
+  );
