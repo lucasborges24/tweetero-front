@@ -52,22 +52,24 @@ function loadTweets() {
   });
 }
 
-function postTweet() {
-  const tweet = document.querySelector('#tweet').value;
+class PostTweet {
+  constructor() {
+    this.loadTweets = new LoadTweets();
+  }
 
-  axios
-    .post('http://localhost:5001/tweets', {
+  async postTweet(tweet) {
+    try {
+      await axios.post("http://localhost:5001/tweets", {
       username: _username,
-      tweet
-    })
-    .then(() => {
-      document.querySelector('#tweet').value = '';
-      loadTweets();
-    })
-    .catch(err => {
+        tweet,
+      });
+      document.querySelector("#tweet").value = "";
+      this.loadTweets.loadTweets();
+    } catch (err) {
       console.error(err);
-      alert('Erro ao fazer tweet! Consulte os logs.');
-    });
+      alert("Erro ao fazer tweet! Consulte os logs.");
+    }
+  }
 }
 
 document
